@@ -211,7 +211,9 @@
                 style="max-width: 220px"
               >
                 <option value="">All Courses</option>
-                <option value="{{course_id}}">{{course_title}}</option>
+                @foreach($courses as $course)
+        <option value="{{ $course->id }}">{{ $course->title }}</option>
+    @endforeach
               </select>
               <select
                 id="paymentStatusFilter"
@@ -241,7 +243,7 @@
               <div class="d-flex justify-content-between align-items-center mb-3">
                 <h5 class="mb-0">Payments</h5>
                 <div class="text-muted small">
-                  Total: {{total_payments}} • Revenue: {{total_revenue}}
+                  <h3>Total Payments: {{ $total_payments }} </h3>
                 </div>
               </div>
 
@@ -258,52 +260,47 @@
                     </tr>
                   </thead>
                   <tbody id="paymentsTableBody">
-                    <!-- template row (server-side) -->
-                    <tr>
-                      <td><input type="checkbox" class="rowCheckbox" /></td>
-                      <td>
-                        <div class="d-flex align-items-center gap-3">
-                          <img
-                            src="{{student_avatar}}"
-                            alt="avatar"
-                            class="rounded-circle"
-                            width="42"
-                            height="42"
-                          />
-                          <div>
-                            <div class="fw-semibold">{{ auth()->user()->name }}</div>
-                            <div class="text-muted small">{{student_email}}</div>
-                          </div>
-                        </div>
-                      </td>
-                      <td class="hide-xs">{{course_title}}</td>
-                      <td>₹ {{amount_paid}}</td>
-                      <td>
-                        <span class="badge status-badge bg-success">{{payment_status}}</span>
-                      </td>
-                      <td class="text-end action-btns">
-                        <button
-                          class="btn btn-sm btn-outline-success"
-                          onclick="confirmMarkPaid('{{ auth()->user()->name }}','{{transaction_id}}')"
-                        >
-                          <i class="fa-solid fa-check me-1"></i> Mark Paid
-                        </button>
-                        <button
-                          class="btn btn-sm btn-outline-warning"
-                          onclick="confirmRefund('{{ auth()->user()->name }}','{{transaction_id}}')"
-                        >
-                          <i class="fa-solid fa-rotate-left me-1"></i> Refund
-                        </button>
-                      </td>
-                    </tr>
+@forelse($payments as $payment)
+<tr>
+    <td><input type="checkbox" class="rowCheckbox" /></td>
+    <td>
+        <div class="d-flex align-items-center gap-3">
+            <img src="{{ $payment->student->avatar ?? asset('images/default-avatar.png') }}" alt="avatar" class="rounded-circle" width="42" height="42"/>
+            <div>
+                <div class="fw-semibold">{{ $payment->student->name }}</div>
+                <div class="text-muted small">{{ $payment->student->email }}</div>
+            </div>
+        </div>
+    </td>
+    <td class="hide-xs">{{ $payment->course->title }}</td>
+    <td> ৳ {{ $payment->amount }}</td>
+    <td>
+        <span class="badge status-badge 
+            @if($payment->status == 'paid') bg-success 
+            @elseif($payment->status == 'pending') bg-warning 
+            @elseif($payment->status == 'refunded') bg-danger 
+            @endif">
+            {{ ucfirst($payment->status) }}
+        </span>
+    </td>
+    <td class="text-end action-btns">
+        <button class="btn btn-sm btn-outline-success" onclick="confirmMarkPaid('{{ $payment->student->name }}','{{ $payment->transaction_id }}')">
+            <i class="fa-solid fa-check me-1"></i> Mark Paid
+        </button>
+        <button class="btn btn-sm btn-outline-warning" onclick="confirmRefund('{{ $payment->student->name }}','{{ $payment->transaction_id }}')">
+            <i class="fa-solid fa-rotate-left me-1"></i> Refund
+        </button>
+    </td>
+</tr>
+@empty
+<tr id="noPayments">
+    <td colspan="6" class="text-center text-muted small py-4">
+        No payments found. Use filters or import data.
+    </td>
+</tr>
+@endforelse
+</tbody>
 
-                    <!-- empty placeholder -->
-                    <tr id="noPayments" style="display: none">
-                      <td colspan="6" class="text-center text-muted small py-4">
-                        No payments found. Use filters or import data.
-                      </td>
-                    </tr>
-                  </tbody>
                 </table>
               </div>
             </div>
@@ -609,7 +606,7 @@
                 style="max-width: 220px"
               >
                 <option value="">All Courses</option>
-                <option value="{{course_id}}">{{course_title}}</option>
+                <option value="{{$course_id}}">{{$course_title}}</option>
               </select>
               <select
                 id="paymentStatusFilter"
@@ -639,7 +636,7 @@
               <div class="d-flex justify-content-between align-items-center mb-3">
                 <h5 class="mb-0">Payments</h5>
                 <div class="text-muted small">
-                  Total: {{total_payments}} • Revenue: {{total_revenue}}
+                  Total: {{$total_payments}} • Revenue: {{$total_revenue}}
                 </div>
               </div>
 
@@ -662,7 +659,7 @@
                       <td>
                         <div class="d-flex align-items-center gap-3">
                           <img
-                            src="{{student_avatar}}"
+                            src="{{ $payment->student->avatar ?? asset('images/default-avatar.png') }}"
                             alt="avatar"
                             class="rounded-circle"
                             width="42"
@@ -670,14 +667,14 @@
                           />
                           <div>
                             <div class="fw-semibold">{{ auth()->user()->name }}</div>
-                            <div class="text-muted small">{{student_email}}</div>
+                            <div class="text-muted small">{{ $payment->student->email }}</div>
                           </div>
                         </div>
                       </td>
-                      <td class="hide-xs">{{course_title}}</td>
-                      <td>₹ {{amount_paid}}</td>
+                      <td class="hide-xs">{{ $payment->course->title }}</td>
+                      <td>৳ {{ $payment->course->title }}</td>
                       <td>
-                        <span class="badge status-badge bg-success">{{payment_status}}</span>
+                        <span class="badge status-badge bg-success">{{$payment_status}}</span>
                       </td>
                       <td class="text-end action-btns">
                         <button

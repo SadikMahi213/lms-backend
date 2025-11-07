@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\StudentController;
+use App\Http\Controllers\Admin\CourseController;
 
 // Public Routes
 Route::get('/', function () {
@@ -24,6 +25,10 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/notice-board', [AdminController::class, 'noticeBoard'])->name('notice-board');
     Route::get('/payments', [AdminController::class, 'payments'])->name('payments');
     Route::get('/portfolio', [AdminController::class, 'portfolio'])->name('portfolio');
+    Route::get('/courses', [CourseController::class, 'courses'])->name('courses');
+    Route::get('/teachers', [CourseController::class, 'teachers'])->name('teachers');
+     Route::get('/students', [CourseController::class, 'students'])->name('students');
+
 });
 
 // Teacher Routes

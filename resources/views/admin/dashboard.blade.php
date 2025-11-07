@@ -119,16 +119,16 @@
           <a href="#" class="sidebar-link active"
             ><i class="fa-solid fa-gauge me-2"></i> Dashboard</a
           >
-          <a href="courses.html" class="sidebar-link"
+          <a href="{{ route('admin.courses') }}" class="sidebar-link"
             ><i class="fa-solid fa-book-open me-2"></i> Courses</a
           >
-          <a href="teachers.html" class="sidebar-link"
+          <a href="{{route('admin.teachers')}}" class="sidebar-link"
             ><i class="fa-solid fa-chalkboard-teacher me-2"></i> Teachers</a
           >
           <a href="enrolled-students.html" class="sidebar-link"
             ><i class="fa-solid fa-user-graduate me-2"></i> Students</a
           >
-          <a href="payments.html" class="sidebar-link"
+          <a href="{{route('admin.payments')}}" class="sidebar-link"
             ><i class="fa-solid fa-credit-card me-2"></i> Payments</a
           >
           <a href="notice-board.html" class="sidebar-link"
@@ -206,7 +206,7 @@
                 <div class="d-flex align-items-center justify-content-between">
                   <div>
                     <div class="text-sm text-opacity-80">Total Students</div>
-                    <div class="h3 my-1">0</div>
+                    <div class="h3 my-1">{{ $total_students }}</div>
                     <div class="text-xs text-white/80">Active / Enrolled</div>
                   </div>
                   <div class="bg-white/10 rounded p-3">
@@ -236,7 +236,7 @@
                 <div class="d-flex align-items-center justify-content-between">
                   <div>
                     <div class="text-sm">Payments</div>
-                    <div class="h3 my-1">\{{total_payments}}</div>
+                    <div class="h3 my-1">\{{$total_payments}}</div>
                     <div class="text-xs text-white/80">Monthly revenue</div>
                   </div>
                   <div class="bg-white/10 rounded p-3">

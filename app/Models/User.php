@@ -9,6 +9,13 @@ use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
+
+    public function courses()
+{
+    return $this->hasMany(Course::class, 'teacher_id'); 
+    // ধরে নিচ্ছি courses table-এ teacher_id আছে
+}
+
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
