@@ -94,22 +94,22 @@
         </div>
 
         <nav class="mt-4">
-          <a href="dashboard.html" class="sidebar-link"
+          <a href="{{ route('student.dashboard') }}" class="sidebar-link"
             ><i class="fa-solid fa-gauge me-2"></i> Dashboard</a
           >
-          <a href="my-courses.html" class="sidebar-link active"
+          <a href="{{ route('student.my-courses') }}" class="sidebar-link active"
             ><i class="fa-solid fa-book-open me-2"></i> My Courses</a
           >
-          <a href="library.html" class="sidebar-link"
+          <a href="{{ route('student.library') }}" class="sidebar-link"
             ><i class="fa-solid fa-book me-2"></i> Library</a
           >
-          <a href="exam-portal.html" class="sidebar-link"
+          <a href="{{ route('student.exam-portal-general') }}" class="sidebar-link"
             ><i class="fa-solid fa-file-lines me-2"></i> Exam Portal</a
           >
-          <a href="messages.html" class="sidebar-link"
+          <a href="{{ route('student.message-inbox') }}" class="sidebar-link"
             ><i class="fa-solid fa-inbox me-2"></i> Messages</a
           >
-          <a href="cart.html" class="sidebar-link"
+          <a href="{{ route('student.cart') }}" class="sidebar-link"
             ><i class="fa-solid fa-cart-shopping me-2"></i> Add to Cart</a
           >
         </nav>
@@ -129,7 +129,7 @@
             </div>
             <div class="d-flex align-items-center gap-3">
               <div class="d-none d-md-block text-muted">
-                Welcome, <strong>{{student_name}}</strong>
+                Welcome, <strong>{{ auth()->user()->name }}</strong>
               </div>
               <div class="dropdown">
                 <a
@@ -151,7 +151,7 @@
                   <li>
                     <hr class="dropdown-divider" />
                   </li>
-                  <li><a class="dropdown-item text-danger" href="#">Logout</a></li>
+                  <li><form method="POST" action="{{ route('logout') }}">@csrf<button type="submit" class="dropdown-item text-danger">Logout</button></form></li>
                 </ul>
               </div>
             </div>
@@ -176,19 +176,11 @@
                   </thead>
                   <tbody>
                     <tr>
-                      <td>{{course_name}}</td>
-                      <td><span class="badge bg-success">Active</span></td>
-                      <td><a href="{{join_link}}" class="btn btn-sm btn-primary">Join</a></td>
-                      <td>
-                        <a href="{{recorded_link}}" class="btn btn-sm btn-outline-secondary"
-                          >View Recorded</a
-                        >
-                      </td>
-                      <td>
-                        <a href="{{course_details}}" class="btn btn-sm btn-info">Details</a>
+                      <td colspan="5" class="text-center text-muted py-4">
+                        No courses enrolled yet. Browse available courses to get started!
                       </td>
                     </tr>
-                    <!-- Repeat rows dynamically -->
+                  </tbody>
                   </tbody>
                 </table>
               </div>

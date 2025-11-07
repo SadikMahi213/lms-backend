@@ -173,7 +173,7 @@
 
             <div class="d-flex align-items-center gap-3">
               <div class="d-none d-md-block text-muted">
-                Welcome, <strong>{{admin_name}}</strong>
+                Welcome, <strong>{{ auth()->user()->name }}</strong>
               </div>
               <div class="dropdown">
                 <a
@@ -274,7 +274,7 @@
                             height="42"
                           />
                           <div>
-                            <div class="fw-semibold">{{student_name}}</div>
+                            <div class="fw-semibold">{{ auth()->user()->name }}</div>
                             <div class="text-muted small">{{student_joined}}</div>
                           </div>
                         </div>
@@ -298,7 +298,7 @@
                         >
                         <button
                           class="btn btn-sm btn-outline-danger"
-                          onclick="confirmDelete('{{student_name}}')"
+                          onclick="confirmDelete('{{ auth()->user()->name }}')"
                         >
                           <i class="fa-solid fa-trash me-1"></i> Delete
                         </button>

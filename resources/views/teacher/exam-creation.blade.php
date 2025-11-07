@@ -58,16 +58,16 @@
         </div>
 
         <nav class="mt-4">
-          <a href="dashboard.html" class="sidebar-link d-block py-2 text-slate-400 hover:text-white"
+          <a href="{{ route('teacher.dashboard') }}" class="sidebar-link d-block py-2 text-slate-400 hover:text-white"
             ><i class="fa-solid fa-gauge me-2"></i> Dashboard</a
           >
           <a
-            href="exam-creation.html"
+            href="{{ route('teacher.exam-creation') }}"
             class="sidebar-link text-white bg-slate-700 d-block py-2 rounded"
             ><i class="fa-solid fa-file-circle-plus me-2"></i> Create Exam</a
           >
           <a
-            href="my-courses.html"
+            href="{{ route('teacher.upload-course') }}"
             class="sidebar-link d-block py-2 text-slate-400 hover:text-white"
             ><i class="fa-solid fa-book-open me-2"></i> My Courses</a
           >
@@ -78,7 +78,7 @@
       <main class="flex-1 p-4 lg:p-8">
         <div class="d-flex justify-content-between align-items-center mb-4">
           <h3 class="fw-semibold">Create New Exam</h3>
-          <a href="dashboard.html" class="btn btn-outline-secondary">
+          <a href="{{ route('teacher.dashboard') }}" class="btn btn-outline-secondary">
             <i class="fa-solid fa-arrow-left me-2"></i>Back to Dashboard
           </a>
         </div>

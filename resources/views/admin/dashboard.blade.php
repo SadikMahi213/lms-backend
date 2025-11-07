@@ -169,7 +169,7 @@
 
             <div class="d-flex align-items-center gap-3">
               <div class="d-none d-md-block text-muted">
-                Welcome, <strong>{{admin_name}}</strong>
+                Welcome, <strong>{{ auth()->user()->name }}</strong>
               </div>
               <div class="dropdown">
                 <a
@@ -206,7 +206,7 @@
                 <div class="d-flex align-items-center justify-content-between">
                   <div>
                     <div class="text-sm text-opacity-80">Total Students</div>
-                    <div class="h3 my-1">{{total_students}}</div>
+                    <div class="h3 my-1">0</div>
                     <div class="text-xs text-white/80">Active / Enrolled</div>
                   </div>
                   <div class="bg-white/10 rounded p-3">
@@ -221,8 +221,8 @@
                 <div class="d-flex align-items-center justify-content-between">
                   <div>
                     <div class="text-sm text-white/90">Courses</div>
-                    <div class="h3 my-1">{{total_courses}}</div>
-                    <div class="text-xs text-white/80">{{course_title}}</div>
+                    <div class="h3 my-1">0</div>
+                    <div class="text-xs text-white/80">Sample Course</div>
                   </div>
                   <div class="bg-white/10 rounded p-3">
                     <i class="fa-solid fa-book fa-2x"></i>
@@ -236,7 +236,7 @@
                 <div class="d-flex align-items-center justify-content-between">
                   <div>
                     <div class="text-sm">Payments</div>
-                    <div class="h3 my-1">{{total_payments}}</div>
+                    <div class="h3 my-1">\{{total_payments}}</div>
                     <div class="text-xs text-white/80">Monthly revenue</div>
                   </div>
                   <div class="bg-white/10 rounded p-3">
@@ -251,7 +251,7 @@
                 <div class="d-flex align-items-center justify-content-between">
                   <div>
                     <div class="text-sm">Exams</div>
-                    <div class="h3 my-1">{{total_exams}}</div>
+                    <div class="h3 my-1">0</div>
                     <div class="text-xs text-white/80">Scheduled / Completed</div>
                   </div>
                   <div class="bg-white/10 rounded p-3">
@@ -286,11 +286,11 @@
                       <tbody>
                         <tr>
                           <td>
-                            <div class="fw-semibold">{{course_title}}</div>
-                            <div class="text-muted small">{{course_desc}}</div>
+                            <div class="fw-semibold">Sample Course</div>
+                            <div class="text-muted small">Course description</div>
                           </td>
-                          <td>{{teacher_name}}</td>
-                          <td>{{enrolled_count}}</td>
+                          <td>{{ auth()->user()->name }}</td>
+                          <td>0</td>
                           <td><span class="badge bg-success">Active</span></td>
                           <td><a href="#" class="btn btn-sm btn-outline-secondary">View</a></td>
                         </tr>
@@ -327,7 +327,7 @@
                     </li>
                     <li class="mb-2">
                       <span class="fw-semibold">Exam:</span> New exam scheduled for
-                      {{next_exam_date}}.
+                      No exams scheduled.
                     </li>
                   </ul>
                 </div>
@@ -337,7 +337,7 @@
                 <div class="card-body">
                   <h6 class="mb-2">Storage</h6>
                   <div class="text-muted small mb-2">
-                    Used: {{storage_used}} of {{storage_total}}
+                    Used: 0GB of 100GB
                   </div>
                   <div class="progress" style="height: 10px">
                     <div

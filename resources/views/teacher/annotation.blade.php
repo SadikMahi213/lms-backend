@@ -86,19 +86,19 @@
         </div>
 
         <nav class="mt-4">
-          <a href="dashboard.html" class="sidebar-link"
+          <a href="{{ route('teacher.dashboard') }}" class="sidebar-link"
             ><i class="fa-solid fa-gauge me-2"></i> Dashboard</a
           >
-          <a href="my-courses.html" class="sidebar-link"
+          <a href="{{ route('teacher.upload-course') }}" class="sidebar-link"
             ><i class="fa-solid fa-book-open me-2"></i> My Courses</a
           >
-          <a href="my-students.html" class="sidebar-link"
+          <a href="{{ route('teacher.dashboard') }}" class="sidebar-link"
             ><i class="fa-solid fa-user-graduate me-2"></i> My Students</a
           >
-          <a href="exam-portal.html" class="sidebar-link active"
+          <a href="{{ route('teacher.exam-creation') }}" class="sidebar-link active"
             ><i class="fa-solid fa-file-lines me-2"></i> Exams</a
           >
-          <a href="messages.html" class="sidebar-link"
+          <a href="{{ route('teacher.message-inbox') }}" class="sidebar-link"
             ><i class="fa-solid fa-inbox me-2"></i> Inbox</a
           >
         </nav>
@@ -118,7 +118,7 @@
             </div>
             <div class="d-flex align-items-center gap-3">
               <div class="d-none d-md-block text-muted">
-                Teacher: <strong>{{teacher_name}}</strong>
+                Teacher: <strong>{{ auth()->user()->name }}</strong>
               </div>
             </div>
           </div>
@@ -154,7 +154,7 @@
           <!-- Student Submission -->
           <div class="card shadow-sm">
             <div class="card-body">
-              <h5 class="mb-3">Student Submission: {{student_name}}</h5>
+              <h5 class="mb-3">Student Submission: {{ auth()->user()->name }}</h5>
               <canvas id="annotationCanvas" width="1000" height="1200"></canvas>
             </div>
           </div>

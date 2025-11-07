@@ -94,22 +94,22 @@
         </div>
 
         <nav class="mt-4">
-          <a href="dashboard.html" class="sidebar-link">
+          <a href="{{ route('student.dashboard') }}" class="sidebar-link">
             <i class="fa-solid fa-gauge me-2"></i> Dashboard
           </a>
-          <a href="my-courses.html" class="sidebar-link">
+          <a href="{{ route('student.my-courses') }}" class="sidebar-link">
             <i class="fa-solid fa-book-open me-2"></i> My Courses
           </a>
-          <a href="library.html" class="sidebar-link">
+          <a href="{{ route('student.library') }}" class="sidebar-link">
             <i class="fa-solid fa-book me-2"></i> Library
           </a>
-          <a href="exam-portal.html" class="sidebar-link">
+          <a href="{{ route('student.exam-portal-general') }}" class="sidebar-link">
             <i class="fa-solid fa-file-lines me-2"></i> Exam Portal
           </a>
           <a href="message-inbox.html" class="sidebar-link active">
             <i class="fa-solid fa-inbox me-2"></i> Message Inbox
           </a>
-          <a href="cart.html" class="sidebar-link">
+          <a href="{{ route('student.cart') }}" class="sidebar-link">
             <i class="fa-solid fa-cart-shopping me-2"></i> Add to Cart
           </a>
         </nav>
@@ -130,7 +130,7 @@
 
             <div class="d-flex align-items-center gap-3">
               <div class="d-none d-md-block text-muted">
-                Welcome, <strong>{{student_name}}</strong>
+                Welcome, <strong>{{ auth()->user()->name }}</strong>
               </div>
               <div class="dropdown">
                 <a
@@ -152,7 +152,7 @@
                   <li>
                     <hr class="dropdown-divider" />
                   </li>
-                  <li><a class="dropdown-item text-danger" href="#">Logout</a></li>
+                  <li><form method="POST" action="{{ route('logout') }}">@csrf<button type="submit" class="dropdown-item text-danger">Logout</button></form></li>
                 </ul>
               </div>
             </div>
@@ -177,23 +177,12 @@
                   </thead>
                   <tbody>
                     <tr>
-                      <td>{{teacher_name}}</td>
-                      <td>
-                        <div class="fw-semibold">{{message_subject}}</div>
-                        <div class="text-muted small">{{message_preview}}</div>
-                      </td>
-                      <td>2h ago</td>
-                      <td>
-                        <button class="btn btn-sm btn-outline-primary me-1">
-                          <i class="fa-solid fa-reply me-1"></i> Reply
-                        </button>
-                        <button class="btn btn-sm btn-outline-danger">
-                          <i class="fa-solid fa-trash me-1"></i> Delete
-                        </button>
+                      <td colspan="4" class="text-center text-muted py-4">
+                        No messages yet.
                       </td>
                     </tr>
-                    <tr>
-                      <td>{{admin_name}}</td>
+                    <tr style="display:none;">
+                      <td>{{ auth()->user()->name }}</td>
                       <td>
                         <div class="fw-semibold">New Notice</div>
                         <div class="text-muted small">Check the latest exam schedule.</div>

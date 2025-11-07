@@ -27,6 +27,10 @@
     />
 
     <style>
+      html {
+        scroll-behavior: smooth;
+      }
+
       body {
         font-family: 'Inter', sans-serif;
       }
@@ -106,7 +110,7 @@
           Join thousands of students mastering courses online. Flexible learning, expert teachers,
           and premium content.
         </p>
-        <a href="student-login.html" class="btn btn-primary btn-lg me-2">Get Started</a>
+        <a href="{{ route('register') }}" class="btn btn-primary btn-lg me-2">Get Started</a>
         <a href="#courses" class="btn btn-outline-light btn-lg">Explore Courses</a>
       </div>
     </section>
@@ -124,7 +128,7 @@
                 <p class="card-text text-muted">
                   Start your journey in mathematics with clear explanations and practical examples.
                 </p>
-                <a href="student-login.html" class="btn btn-primary btn-sm">Enroll Now</a>
+                <a href="{{ route('register') }}" class="btn btn-primary btn-sm">Enroll Now</a>
               </div>
             </div>
           </div>
@@ -138,7 +142,7 @@
                   Learn Python from scratch and build real-world projects with our expert
                   instructors.
                 </p>
-                <a href="student-login.html" class="btn btn-primary btn-sm">Enroll Now</a>
+                <a href="{{ route('register') }}" class="btn btn-primary btn-sm">Enroll Now</a>
               </div>
             </div>
           </div>
@@ -152,7 +156,7 @@
                   Master data analysis, visualization, and machine learning concepts in a structured
                   path.
                 </p>
-                <a href="student-login.html" class="btn btn-primary btn-sm">Enroll Now</a>
+                <a href="{{ route('register') }}" class="btn btn-primary btn-sm">Enroll Now</a>
               </div>
             </div>
           </div>
@@ -169,8 +173,8 @@
           students and professionals. Our mission is to provide accessible, high-quality education
           to help you achieve your learning goals.
         </p>
-        <a href="student-login.html" class="btn btn-primary me-2">Join Now</a>
-        <a href="teacher-login.html" class="btn btn-outline-primary">Become a Teacher</a>
+        <a href="{{ route('register') }}" class="btn btn-primary me-2">Join Now</a>
+        <a href="{{ route('register') }}" class="btn btn-outline-primary">Become a Teacher</a>
       </div>
     </section>
 

@@ -165,7 +165,7 @@
 
             <div class="d-flex align-items-center gap-3">
               <div class="d-none d-md-block text-muted">
-                Welcome, <strong>{{admin_name}}</strong>
+                Welcome, <strong>{{ auth()->user()->name }}</strong>
               </div>
               <div class="dropdown">
                 <a
@@ -271,7 +271,7 @@
                             height="42"
                           />
                           <div>
-                            <div class="fw-semibold">{{student_name}}</div>
+                            <div class="fw-semibold">{{ auth()->user()->name }}</div>
                             <div class="text-muted small">{{student_email}}</div>
                           </div>
                         </div>
@@ -284,13 +284,13 @@
                       <td class="text-end action-btns">
                         <button
                           class="btn btn-sm btn-outline-success"
-                          onclick="confirmMarkPaid('{{student_name}}','{{transaction_id}}')"
+                          onclick="confirmMarkPaid('{{ auth()->user()->name }}','{{transaction_id}}')"
                         >
                           <i class="fa-solid fa-check me-1"></i> Mark Paid
                         </button>
                         <button
                           class="btn btn-sm btn-outline-warning"
-                          onclick="confirmRefund('{{student_name}}','{{transaction_id}}')"
+                          onclick="confirmRefund('{{ auth()->user()->name }}','{{transaction_id}}')"
                         >
                           <i class="fa-solid fa-rotate-left me-1"></i> Refund
                         </button>
@@ -563,7 +563,7 @@
 
             <div class="d-flex align-items-center gap-3">
               <div class="d-none d-md-block text-muted">
-                Welcome, <strong>{{admin_name}}</strong>
+                Welcome, <strong>{{ auth()->user()->name }}</strong>
               </div>
               <div class="dropdown">
                 <a
@@ -669,7 +669,7 @@
                             height="42"
                           />
                           <div>
-                            <div class="fw-semibold">{{student_name}}</div>
+                            <div class="fw-semibold">{{ auth()->user()->name }}</div>
                             <div class="text-muted small">{{student_email}}</div>
                           </div>
                         </div>
@@ -682,13 +682,13 @@
                       <td class="text-end action-btns">
                         <button
                           class="btn btn-sm btn-outline-success"
-                          onclick="confirmMarkPaid('{{student_name}}','{{transaction_id}}')"
+                          onclick="confirmMarkPaid('{{ auth()->user()->name }}','{{transaction_id}}')"
                         >
                           <i class="fa-solid fa-check me-1"></i> Mark Paid
                         </button>
                         <button
                           class="btn btn-sm btn-outline-warning"
-                          onclick="confirmRefund('{{student_name}}','{{transaction_id}}')"
+                          onclick="confirmRefund('{{ auth()->user()->name }}','{{transaction_id}}')"
                         >
                           <i class="fa-solid fa-rotate-left me-1"></i> Refund
                         </button>

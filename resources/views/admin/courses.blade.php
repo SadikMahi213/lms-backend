@@ -167,7 +167,7 @@
 
             <div class="d-flex align-items-center gap-3">
               <div class="d-none d-md-block text-muted">
-                Welcome, <strong>{{admin_name}}</strong>
+                Welcome, <strong>{{ auth()->user()->name }}</strong>
               </div>
               <div class="dropdown">
                 <a
@@ -256,7 +256,7 @@
                         <div class="fw-semibold">{{course_name}}</div>
                         <div class="text-muted small">{{course_short_desc}}</div>
                       </td>
-                      <td class="hide-xs">{{teacher_name}}</td>
+                      <td class="hide-xs">{{ auth()->user()->name }}</td>
                       <td>{{enrolled_count}}</td>
                       <td><span class="badge bg-success">Published</span></td>
                       <td class="text-end action-btns">

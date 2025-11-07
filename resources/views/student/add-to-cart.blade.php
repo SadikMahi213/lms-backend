@@ -63,6 +63,28 @@
         transform: translateY(-4px);
         box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
       }
+
+      .sidebar-link {
+        color: #cbd5e1;
+        display: block;
+        padding: 0.75rem 1rem;
+        border-radius: 0.5rem;
+        text-decoration: none;
+        transition: all 0.2s;
+      }
+
+      .sidebar-link:hover,
+      .sidebar-link.active {
+        background: rgba(255, 255, 255, 0.04);
+        color: #fff;
+        text-decoration: none;
+      }
+
+      .brand {
+        font-weight: 700;
+        letter-spacing: 0.3px;
+        color: #fff;
+      }
     </style>
   </head>
 
@@ -83,22 +105,22 @@
         </div>
 
         <nav class="mt-4">
-          <a href="dashboard.html" class="sidebar-link"
+          <a href="{{ route('student.dashboard') }}" class="sidebar-link"
             ><i class="fa-solid fa-gauge me-2"></i> Dashboard</a
           >
-          <a href="my-courses.html" class="sidebar-link"
+          <a href="{{ route('student.my-courses') }}" class="sidebar-link"
             ><i class="fa-solid fa-book-open me-2"></i> My Courses</a
           >
-          <a href="library.html" class="sidebar-link"
+          <a href="{{ route('student.library') }}" class="sidebar-link"
             ><i class="fa-solid fa-book me-2"></i> Library</a
           >
-          <a href="exam-portal.html" class="sidebar-link"
+          <a href="{{ route('student.exam-portal-general') }}" class="sidebar-link"
             ><i class="fa-solid fa-file-lines me-2"></i> Exam Portal</a
           >
-          <a href="messages.html" class="sidebar-link"
+          <a href="{{ route('student.message-inbox') }}" class="sidebar-link"
             ><i class="fa-solid fa-inbox me-2"></i> Message Inbox</a
           >
-          <a href="add-to-cart.html" class="sidebar-link active"
+          <a href="{{ route('student.cart') }}" class="sidebar-link active"
             ><i class="fa-solid fa-cart-shopping me-2"></i> Add to Cart</a
           >
         </nav>
@@ -119,7 +141,7 @@
 
             <div class="d-flex align-items-center gap-3">
               <div class="d-none d-md-block text-muted">
-                Welcome, <strong>{{student_name}}</strong>
+                Welcome, <strong>{{ auth()->user()->name }}</strong>
               </div>
               <div class="dropdown">
                 <a
@@ -141,7 +163,7 @@
                   <li>
                     <hr class="dropdown-divider" />
                   </li>
-                  <li><a class="dropdown-item text-danger" href="#">Logout</a></li>
+                  <li><form method="POST" action="{{ route('logout') }}">@csrf<button type="submit" class="dropdown-item text-danger">Logout</button></form></li>
                 </ul>
               </div>
             </div>
@@ -152,18 +174,12 @@
           <h5 class="mb-4">Available Courses</h5>
 
           <div class="row g-4">
-            <!-- Repeat this card for each course -->
-            <div class="col-12 col-md-6 col-lg-4">
-              <div class="card course-card shadow-sm">
-                <div class="card-body">
-                  <h6 class="fw-semibold">{{course_title}}</h6>
-                  <p class="text-muted small">{{course_description}}</p>
-                  <div class="d-flex justify-content-between align-items-center mt-3">
-                    <span class="fw-bold text-indigo-600">${{course_price}}</span>
-                    <button class="btn btn-primary btn-sm">
-                      <i class="fa-solid fa-cart-plus me-1"></i> Enroll
-                    </button>
-                  </div>
+            <div class="col-12">
+              <div class="card shadow-sm">
+                <div class="card-body text-center py-5">
+                  <i class="fa-solid fa-shopping-cart fa-3x text-muted mb-3"></i>
+                  <h6 class="text-muted">No courses available at the moment</h6>
+                  <p class="text-muted small">Check back later for new courses!</p>
                 </div>
               </div>
             </div>

@@ -109,22 +109,22 @@
         </div>
 
         <nav class="mt-4">
-          <a href="#" class="sidebar-link active"
+          <a href="{{ route('student.dashboard') }}" class="sidebar-link active"
             ><i class="fa-solid fa-gauge me-2"></i> Dashboard</a
           >
-          <a href="my-courses.html" class="sidebar-link"
+          <a href="{{ route('student.my-courses') }}" class="sidebar-link"
             ><i class="fa-solid fa-book-open me-2"></i> My Courses</a
           >
-          <a href="library.html" class="sidebar-link"
+          <a href="{{ route('student.library') }}" class="sidebar-link"
             ><i class="fa-solid fa-book me-2"></i> Library</a
           >
-          <a href="exam-portal.html" class="sidebar-link"
+          <a href="{{ route('student.exam-portal-general') }}" class="sidebar-link"
             ><i class="fa-solid fa-file-lines me-2"></i> Exam Portal</a
           >
-          <a href="messages.html" class="sidebar-link"
+          <a href="{{ route('student.message-inbox') }}" class="sidebar-link"
             ><i class="fa-solid fa-inbox me-2"></i> Message Inbox</a
           >
-          <a href="cart.html" class="sidebar-link"
+          <a href="{{ route('student.cart') }}" class="sidebar-link"
             ><i class="fa-solid fa-cart-shopping me-2"></i> Add to Cart</a
           >
         </nav>
@@ -145,7 +145,7 @@
 
             <div class="d-flex align-items-center gap-3">
               <div class="d-none d-md-block text-muted">
-                Welcome, <strong>{{student_name}}</strong>
+                Welcome, <strong>{{ auth()->user()->name }}</strong>
               </div>
               <div class="dropdown">
                 <a
@@ -154,7 +154,7 @@
                   data-bs-toggle="dropdown"
                 >
                   <img
-                    src="https://ui-avatars.com/api/?name=Student&background=3b82f6&color=fff"
+                    src="https://ui-avatars.com/api/?name={{ urlencode(auth()->user()->name) }}&background=3b82f6&color=fff"
                     class="rounded-circle"
                     width="38"
                     height="38"
@@ -167,7 +167,12 @@
                   <li>
                     <hr class="dropdown-divider" />
                   </li>
-                  <li><a class="dropdown-item text-danger" href="#">Logout</a></li>
+                  <li>
+                    <form method="POST" action="{{ route('logout') }}">
+                      @csrf
+                      <button type="submit" class="dropdown-item text-danger">Logout</button>
+                    </form>
+                  </li>
                 </ul>
               </div>
             </div>
@@ -182,7 +187,7 @@
                 <div class="d-flex align-items-center justify-content-between">
                   <div>
                     <div class="text-sm text-white/90">Enrolled Courses</div>
-                    <div class="h3 my-1">{{enrolled_courses}}</div>
+                    <div class="h3 my-1">0</div>
                     <div class="text-xs text-white/80">Active / Total</div>
                   </div>
                   <div class="bg-white/10 rounded p-3">
@@ -197,7 +202,7 @@
                 <div class="d-flex align-items-center justify-content-between">
                   <div>
                     <div class="text-sm text-white/90">Upcoming Exams</div>
-                    <div class="h3 my-1">{{upcoming_exams}}</div>
+                    <div class="h3 my-1">0</div>
                     <div class="text-xs text-white/80">Next week</div>
                   </div>
                   <div class="bg-white/10 rounded p-3">
@@ -212,7 +217,7 @@
                 <div class="d-flex align-items-center justify-content-between">
                   <div>
                     <div class="text-sm text-white/90">Messages</div>
-                    <div class="h3 my-1">{{unread_messages}}</div>
+                    <div class="h3 my-1">0</div>
                     <div class="text-xs text-white/80">Unread</div>
                   </div>
                   <div class="bg-white/10 rounded p-3">
@@ -230,7 +235,7 @@
                 <div class="card-body">
                   <div class="d-flex justify-content-between align-items-center mb-3">
                     <h5 class="mb-0">My Recent Courses</h5>
-                    <a href="my-courses.html" class="btn btn-sm btn-outline-primary">Manage</a>
+                    <a href="{{ route('student.my-courses') }}" class="btn btn-sm btn-outline-primary">Manage</a>
                   </div>
 
                   <div class="table-responsive">
@@ -244,15 +249,8 @@
                       </thead>
                       <tbody>
                         <tr>
-                          <td>{{course_title}}</td>
-                          <td>
-                            <div class="progress" style="height: 8px">
-                              <div class="progress-bar bg-primary" style="width: 65%"></div>
-                            </div>
-                          </td>
-                          <td><span class="badge bg-success">Active</span></td>
+                          <td colspan="3" class="text-center text-muted">No courses enrolled yet. <a href="{{ route('student.my-courses') }}">Browse Courses</a></td>
                         </tr>
-                        <!-- Repeat rows -->
                       </tbody>
                     </table>
                   </div>
@@ -267,12 +265,9 @@
                   <h6 class="mb-3">Recent Messages</h6>
                   <ul class="list-group list-group-flush small">
                     <li class="list-group-item px-0 border-0">
-                      <div class="fw-semibold">{{teacher_name}}</div>
-                      <div class="text-muted">{{message_preview}}</div>
-                      <div class="text-xs text-muted">2h ago</div>
+                      <div class="text-center text-muted py-3">No messages yet</div>
                     </li>
-                    <li class="list-group-item px-0 border-0">
-                      <div class="fw-semibold">{{admin_name}}</div>
+                  </ul>
                       <div class="text-muted">New notice available.</div>
                       <div class="text-xs text-muted">5h ago</div>
                     </li>

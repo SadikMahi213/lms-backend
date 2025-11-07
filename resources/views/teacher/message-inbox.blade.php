@@ -94,22 +94,22 @@
         </div>
 
         <nav class="mt-4">
-          <a href="dashboard.html" class="sidebar-link"
+          <a href="{{ route('teacher.dashboard') }}" class="sidebar-link"
             ><i class="fa-solid fa-gauge me-2"></i> Dashboard</a
           >
-          <a href="my-courses.html" class="sidebar-link"
+          <a href="{{ route('teacher.upload-course') }}" class="sidebar-link"
             ><i class="fa-solid fa-book-open me-2"></i> My Courses</a
           >
-          <a href="my-students.html" class="sidebar-link"
+          <a href="{{ route('teacher.dashboard') }}" class="sidebar-link"
             ><i class="fa-solid fa-user-graduate me-2"></i> My Students</a
           >
-          <a href="exam-portal.html" class="sidebar-link"
+          <a href="{{ route('teacher.exam-creation') }}" class="sidebar-link"
             ><i class="fa-solid fa-file-lines me-2"></i> Exams</a
           >
-          <a href="message-inbox.html" class="sidebar-link active"
+          <a href="{{ route('teacher.message-inbox') }}" class="sidebar-link active"
             ><i class="fa-solid fa-inbox me-2"></i> Inbox</a
           >
-          <a href="profile.html" class="sidebar-link"
+          <a href="#" class="sidebar-link"
             ><i class="fa-solid fa-user me-2"></i> Profile</a
           >
         </nav>
@@ -130,7 +130,7 @@
 
             <div class="d-flex align-items-center gap-3">
               <div class="d-none d-md-block text-muted">
-                Welcome, <strong>{{teacher_name}}</strong>
+                Welcome, <strong>{{ auth()->user()->name }}</strong>
               </div>
               <div class="dropdown">
                 <a
@@ -152,7 +152,7 @@
                   <li>
                     <hr class="dropdown-divider" />
                   </li>
-                  <li><a class="dropdown-item text-danger" href="#">Logout</a></li>
+                  <li><form method="POST" action="{{ route('logout') }}">@csrf<button type="submit" class="dropdown-item text-danger">Logout</button></form></li>
                 </ul>
               </div>
             </div>
@@ -182,7 +182,7 @@
                   </thead>
                   <tbody>
                     <tr>
-                      <td>{{student_name}}</td>
+                      <td>{{ auth()->user()->name }}</td>
                       <td>{{message_preview}}</td>
                       <td>2h ago</td>
                       <td>
@@ -195,7 +195,7 @@
                       </td>
                     </tr>
                     <tr>
-                      <td>{{admin_name}}</td>
+                      <td>{{ auth()->user()->name }}</td>
                       <td>{{message_preview_admin}}</td>
                       <td>5h ago</td>
                       <td>

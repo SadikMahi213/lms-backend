@@ -109,23 +109,20 @@
         </div>
 
         <nav class="mt-4">
-          <a href="#" class="sidebar-link active"
+          <a href="{{ route('teacher.dashboard') }}" class="sidebar-link active"
             ><i class="fa-solid fa-gauge me-2"></i> Dashboard</a
           >
-          <a href="my-courses.html" class="sidebar-link"
-            ><i class="fa-solid fa-book-open me-2"></i> My Courses</a
+          <a href="{{ route('teacher.upload-course') }}" class="sidebar-link"
+            ><i class="fa-solid fa-book-open me-2"></i> Upload Course</a
           >
-          <a href="my-students.html" class="sidebar-link"
-            ><i class="fa-solid fa-user-graduate me-2"></i> My Students</a
+          <a href="{{ route('teacher.exam-creation') }}" class="sidebar-link"
+            ><i class="fa-solid fa-file-lines me-2"></i> Exam Creation</a
           >
-          <a href="exam-portal.html" class="sidebar-link"
-            ><i class="fa-solid fa-file-lines me-2"></i> Exams</a
+          <a href="{{ route('teacher.annotation') }}" class="sidebar-link"
+            ><i class="fa-solid fa-pen-to-square me-2"></i> Annotation</a
           >
-          <a href="messages.html" class="sidebar-link"
+          <a href="{{ route('teacher.message-inbox') }}" class="sidebar-link"
             ><i class="fa-solid fa-inbox me-2"></i> Inbox</a
-          >
-          <a href="profile.html" class="sidebar-link"
-            ><i class="fa-solid fa-user me-2"></i> Profile</a
           >
         </nav>
 
@@ -154,7 +151,7 @@
 
             <div class="d-flex align-items-center gap-3">
               <div class="d-none d-md-block text-muted">
-                Welcome, <strong>{{teacher_name}}</strong>
+                Welcome, <strong>{{ auth()->user()->name }}</strong>
               </div>
               <div class="dropdown">
                 <a
@@ -176,7 +173,12 @@
                   <li>
                     <hr class="dropdown-divider" />
                   </li>
-                  <li><a class="dropdown-item text-danger" href="#">Logout</a></li>
+                  <li>
+                    <form method="POST" action="{{ route('logout') }}">
+                      @csrf
+                      <button type="submit" class="dropdown-item text-danger">Logout</button>
+                    </form>
+                  </li>
                 </ul>
               </div>
             </div>
@@ -191,7 +193,7 @@
                 <div class="d-flex align-items-center justify-content-between">
                   <div>
                     <div class="text-sm text-white/90">My Courses</div>
-                    <div class="h3 my-1">{{my_courses}}</div>
+                    <div class="h3 my-1">0</div>
                     <div class="text-xs text-white/80">Active / Total</div>
                   </div>
                   <div class="bg-white/10 rounded p-3">
@@ -206,7 +208,7 @@
                 <div class="d-flex align-items-center justify-content-between">
                   <div>
                     <div class="text-sm text-white/90">Students</div>
-                    <div class="h3 my-1">{{my_students}}</div>
+                    <div class="h3 my-1">0</div>
                     <div class="text-xs text-white/80">Across all courses</div>
                   </div>
                   <div class="bg-white/10 rounded p-3">
@@ -221,7 +223,7 @@
                 <div class="d-flex align-items-center justify-content-between">
                   <div>
                     <div class="text-sm">Upcoming Exams</div>
-                    <div class="h3 my-1">{{upcoming_exams}}</div>
+                    <div class="h3 my-1">0</div>
                     <div class="text-xs text-white/80">Scheduled next week</div>
                   </div>
                   <div class="bg-white/10 rounded p-3">
@@ -239,7 +241,7 @@
                 <div class="card-body">
                   <div class="d-flex justify-content-between align-items-center mb-3">
                     <h5 class="mb-0">My Recent Courses</h5>
-                    <a href="my-courses.html" class="btn btn-sm btn-outline-primary">Manage</a>
+                    <a href="{{ route('teacher.upload-course') }}" class="btn btn-sm btn-outline-primary">Manage</a>
                   </div>
 
                   <div class="table-responsive">
@@ -254,8 +256,8 @@
                       </thead>
                       <tbody>
                         <tr>
-                          <td>{{course_title}}</td>
-                          <td>{{course_students}}</td>
+                          <td>Sample Course</td>
+                          <td>0</td>
                           <td>
                             <div class="progress" style="height: 8px">
                               <div class="progress-bar bg-primary" style="width: 70%"></div>
@@ -278,12 +280,12 @@
                   <h6 class="mb-3">Recent Messages</h6>
                   <ul class="list-group list-group-flush small">
                     <li class="list-group-item px-0 border-0">
-                      <div class="fw-semibold">Student: {{student_name}}</div>
-                      <div class="text-muted">{{message_preview}}</div>
+                      <div class="fw-semibold">Student: {{ auth()->user()->name }}</div>
+                      <div class="text-muted">No messages</div>
                       <div class="text-xs text-muted">2h ago</div>
                     </li>
                     <li class="list-group-item px-0 border-0">
-                      <div class="fw-semibold">Admin: {{admin_name}}</div>
+                      <div class="fw-semibold">Admin: {{ auth()->user()->name }}</div>
                       <div class="text-muted">Meeting scheduled for tomorrow.</div>
                       <div class="text-xs text-muted">5h ago</div>
                     </li>
