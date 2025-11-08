@@ -243,49 +243,48 @@
                 <div class="card-body p-3">
                   <div class="d-flex justify-content-between align-items-center mb-3">
                     <h5 class="mb-0">Active Notices</h5>
-                    <div class="text-muted small">Total: {{total_notices}}</div>
+                    <div class="text-muted small">Total: {{$total_notices}}</div>
                   </div>
 
                   <div id="noticesList" class="list-group list-group-flush">
-                    <!-- example notice template (server rendered) -->
-                    <div class="list-group-item mb-3 notice-card priority-high p-3">
-                      <div class="d-flex justify-content-between">
-                        <div>
-                          <div class="fw-semibold">{{notice_title}}</div>
-                          <div class="text-muted small">{{notice_content}}</div>
-                        </div>
-                        <div class="text-end">
-                          <div class="text-muted small">{{notice_date}}</div>
-                          <div class="mt-2"><span class="badge bg-danger">High</span></div>
-                        </div>
-                      </div>
+  @foreach($notices as $notice)
+    <div class="list-group-item mb-3 notice-card priority-high p-3">
+      <div class="d-flex justify-content-between">
+        <div>
+          <div class="fw-semibold">{{ $notice->title }}</div>
+          <div class="text-muted small">{{ $notice->content }}</div>
+        </div>
+        <div class="text-end">
+          <div class="text-muted small">{{ $notice->posted_by }}</div>
+          <div class="mt-2"><span class="badge bg-danger">High</span></div>
+        </div>
+      </div>
 
-                      <div class="mt-3 d-flex justify-content-end gap-2">
-                        <button
-                          class="btn btn-sm btn-outline-primary btn-edit"
-                          data-id="{{notice_id}}"
-                        >
-                          <i class="fa-solid fa-pen-to-square me-1"></i> Edit
-                        </button>
-                        <button
-                          class="btn btn-sm btn-outline-danger btn-delete"
-                          data-id="{{notice_id}}"
-                          data-title="{{notice_title}}"
-                        >
-                          <i class="fa-solid fa-trash me-1"></i> Delete
-                        </button>
-                      </div>
-                    </div>
+      <div class="mt-3 d-flex justify-content-end gap-2">
+        <button
+          class="btn btn-sm btn-outline-primary btn-edit"
+          data-id="{{ $notice->id }}"
+        >
+          <i class="fa-solid fa-pen-to-square me-1"></i> Edit
+        </button>
+        <button
+          class="btn btn-sm btn-outline-danger btn-delete"
+          data-id="{{ $notice->id }}"
+          data-title="{{ $notice->title }}"
+        >
+          <i class="fa-solid fa-trash me-1"></i> Delete
+        </button>
+      </div>
+    </div>
+  @endforeach
 
-                    <!-- placeholder empty state -->
-                    <div
-                      id="noNotices"
-                      class="text-center text-muted small py-4"
-                      style="display: none"
-                    >
-                      No notices found. Create a new notice to get started.
-                    </div>
-                  </div>
+  @if($notices->isEmpty())
+    <div id="noNotices" class="text-center text-muted small py-4">
+      No notices found. Create a new notice to get started.
+    </div>
+  @endif
+</div>
+
                 </div>
               </div>
             </div>
@@ -310,9 +309,9 @@
                   <h6 class="mb-3">Recent Notices</h6>
                   <ul class="list-unstyled small mb-0">
                     <li class="mb-2">
-                      <span class="fw-semibold">{{recent_notice_title}}</span><br /><span
+                      <span class="fw-semibold">{{ $recent_notice_title ?? 'No recent notice' }}</span><br /><span
                         class="text-muted"
-                        >{{recent_notice_date}}</span
+                        >{{$recent_notice_date}}</span
                       >
                     </li>
                     <!-- repeat server-side -->
@@ -424,10 +423,10 @@
       let notices = [
         {
           id: 1,
-          title: '{{notice_title}}',
-          content: '{{notice_content}}',
-          date: '{{notice_date}}',
-          priority: 'high',
+title: @json($notice_title),
+content: @json($notice_content),
+date: @json($notice_date),
+priority: 'high',
         },
       ];
 

@@ -23,4 +23,12 @@ class CourseController extends Controller
 
         return view('admin.students', compact('students'));
     }
+    public function library()
+    {
+        // Example: সব Courses পাঠানো
+        $courses = Course::all();
+
+        // Blade view এ পাঠানো
+        return view('admin.library', compact('courses'));
+    }
 }

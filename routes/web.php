@@ -6,6 +6,9 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\Admin\CourseController;
+use App\Http\Controllers\Admin\LibraryController;
+use App\Http\Controllers\Admin\StudentController as UserStudentController;
+use App\Http\Controllers\Admin\ExamPortalController;
 
 // Public Routes
 Route::get('/', function () {
@@ -28,6 +31,19 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::get('/courses', [CourseController::class, 'courses'])->name('courses');
     Route::get('/teachers', [CourseController::class, 'teachers'])->name('teachers');
      Route::get('/students', [CourseController::class, 'students'])->name('students');
+     Route::get('/library', [LibraryController::class, 'index'])->name('library');
+    Route::get('library/create', [LibraryController::class, 'create'])->name('library.create');
+    Route::post('library', [LibraryController::class, 'store'])->name('library.store');
+    Route::get('library/{id}/edit', [LibraryController::class, 'edit'])->name('library.edit');
+    Route::put('library/{id}', [LibraryController::class, 'update'])->name('library.update');
+    Route::get('/students', [UserStudentController::class, 'index'])->name('students.index');
+    Route::get('/students/create', [UserStudentController::class, 'create'])->name('students.create');
+    Route::post('/students', [UserStudentController::class, 'store'])->name('students.store');
+    Route::get('/students/{id}/edit', [UserStudentController::class, 'edit'])->name('students.edit');
+    Route::put('/students/{id}', [UserStudentController::class, 'update'])->name('students.update');
+    Route::delete('/students/{id}', [UserStudentController::class, 'destroy'])->name('students.destroy');
+     Route::get('exam-portal', [ExamPortalController::class, 'index'])->name('exam-portal');
+     Route::post('/students/import', [UserStudentController::class, 'import'])->name('students.import');
 
 });
 

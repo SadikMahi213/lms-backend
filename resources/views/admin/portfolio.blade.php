@@ -199,7 +199,7 @@
                 <div class="d-flex justify-content-between align-items-center">
                   <div>
                     <div class="text-sm text-muted">Total Students</div>
-                    <div class="stat-value">{{total_students}}</div>
+                    <div class="stat-value">{{$total_students}}</div>
                     <div class="text-xs text-muted">Active / Enrolled</div>
                   </div>
                   <div class="bg-indigo-50 text-indigo-700 rounded p-3">
@@ -214,8 +214,8 @@
                 <div class="d-flex justify-content-between align-items-center">
                   <div>
                     <div class="text-sm text-muted">Total Courses</div>
-                    <div class="stat-value">{{total_courses}}</div>
-                    <div class="text-xs text-muted">{{most_popular_course}}</div>
+                    <div class="stat-value">{{$total_courses}}</div>
+                    <div class="text-xs text-muted">{{$top_course_1}}</div>
                   </div>
                   <div class="bg-emerald-50 text-emerald-700 rounded p-3">
                     <i class="fa-solid fa-book fa-lg"></i>
@@ -229,8 +229,8 @@
                 <div class="d-flex justify-content-between align-items-center">
                   <div>
                     <div class="text-sm text-muted">Revenue (Monthly)</div>
-                    <div class="stat-value">₹ {{monthly_revenue}}</div>
-                    <div class="text-xs text-muted">{{revenue_change}} vs prev month</div>
+                    <div class="stat-value">৳ {{$monthly_revenue}}</div>
+                    <div class="text-xs text-muted">{{$revenue_change}} vs prev month</div>
                   </div>
                   <div class="bg-rose-50 text-rose-700 rounded p-3">
                     <i class="fa-solid fa-credit-card fa-lg"></i>
@@ -244,7 +244,7 @@
                 <div class="d-flex justify-content-between align-items-center">
                   <div>
                     <div class="text-sm text-muted">Exam Pass Rate</div>
-                    <div class="stat-value">{{exam_pass_rate}}%</div>
+                    <div class="stat-value">{{$exam_pass_rate}}%</div>
                     <div class="text-xs text-muted">Last 30 days</div>
                   </div>
                   <div class="bg-yellow-50 text-yellow-800 rounded p-3">
@@ -297,24 +297,24 @@
                   <!-- server rendered items -->
                   <li class="list-group-item d-flex justify-content-between align-items-center">
                     <div>
-                      <div class="fw-semibold">{{top_course_1}}</div>
-                      <div class="text-muted small">{{top_course_1_teacher}}</div>
+                      <div class="fw-semibold">{{$top_course_1}}</div>
+                      <div class="text-muted small">{{$top_course_1_teacher}}</div>
                     </div>
-                    <div class="text-muted small">{{top_course_1_count}} students</div>
+                    <div class="text-muted small">{${top_course_1_count}} students</div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center">
                     <div>
-                      <div class="fw-semibold">{{top_course_2}}</div>
-                      <div class="text-muted small">{{top_course_2_teacher}}</div>
+                      <div class="fw-semibold">{{$top_course_2}}</div>
+                      <div class="text-muted small">{{$top_course_2_teacher}}</div>
                     </div>
-                    <div class="text-muted small">{{top_course_2_count}} students</div>
+                    <div class="text-muted small">{${top_course_2_count}} students</div>
                   </li>
                   <li class="list-group-item d-flex justify-content-between align-items-center">
                     <div>
-                      <div class="fw-semibold">{{top_course_3}}</div>
-                      <div class="text-muted small">{{top_course_3_teacher}}</div>
+                      <div class="fw-semibold">{{ $top_course_3->name ?? 'N/A' }}</div>
+                      <div class="text-muted small">{{ $top_course_3_teacher->name ?? 'N/A' }}</div>
                     </div>
-                    <div class="text-muted small">{{top_course_3_count}} students</div>
+                    <div class="text-muted small">{{ $top_course_3_count ?? 0 }} students</div>
                   </li>
                 </ul>
               </div>
