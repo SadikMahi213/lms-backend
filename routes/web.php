@@ -44,6 +44,11 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->grou
     Route::delete('/students/{id}', [UserStudentController::class, 'destroy'])->name('students.destroy');
      Route::get('exam-portal', [ExamPortalController::class, 'index'])->name('exam-portal');
      Route::post('/students/import', [UserStudentController::class, 'import'])->name('students.import');
+         Route::get('courses', [CourseController::class, 'index'])->name('courses.index');
+    Route::post('courses', [CourseController::class, 'store'])->name('courses.store');
+     Route::get('/courses/{id}', [CourseController::class, 'show'])->name('courses.show');
+     Route::get('/courses/{id}/edit', [CourseController::class, 'edit'])->name('courses.edit');
+     Route::delete('/courses/{id}', [CourseController::class, 'destroy'])->name('courses.destroy');
 
 });
 

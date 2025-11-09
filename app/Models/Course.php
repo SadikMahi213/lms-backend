@@ -24,10 +24,9 @@ class Course extends Model
     /**
      * Teacher relation
      */
-    public function teachers()
+    public function teacher()
     {
-        return $this->belongsToMany(User::class, 'course_user', 'course_id', 'user_id')
-                ->where('role', 'teacher');
+        return $this->belongsTo(User::class, 'teacher_id'); 
     }
     public function students()
     {
