@@ -238,8 +238,15 @@
           </ul>
 
           @if($course->thumbnail)
-            <img src="{{ asset('storage/'.$course->thumbnail) }}" alt="Thumbnail" class="img-fluid rounded mt-3 shadow-sm">
-          @endif
+    <img src="{{ asset('storage/thumbnails/' . basename($course->thumbnail)) }}"
+         alt="Thumbnail"
+         class="img-fluid rounded mt-3 shadow-sm"
+         style="width: 120px; height: auto;">
+@else
+    <img src="https://via.placeholder.com/120x80?text=No+Image"
+         alt="No Image"
+         class="img-fluid rounded mt-3 shadow-sm">
+@endif
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

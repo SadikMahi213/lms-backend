@@ -9,10 +9,14 @@ use App\Http\Controllers\Admin\CourseController;
 use App\Http\Controllers\Admin\LibraryController;
 use App\Http\Controllers\Admin\StudentController as UserStudentController;
 use App\Http\Controllers\Admin\ExamPortalController;
+use App\Http\Controllers\Student\CourseController as StudentCourseController;
+use App\Models\Course;
+
 
 // Public Routes
 Route::get('/', function () {
-    return view('index');
+      $featuredCourses = Course::latest()->take(6)->get();
+    return view('index', compact('featuredCourses'));
 });
 
 // Authentication Routes
@@ -24,32 +28,47 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // Admin Routes
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
+    
+    // Dashboard
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+    
+    // Notice Board
     Route::get('/notice-board', [AdminController::class, 'noticeBoard'])->name('notice-board');
+    
+    // Payments
     Route::get('/payments', [AdminController::class, 'payments'])->name('payments');
+    
+    // Portfolio
     Route::get('/portfolio', [AdminController::class, 'portfolio'])->name('portfolio');
-    Route::get('/courses', [CourseController::class, 'courses'])->name('courses');
+
+    // Courses
+    Route::get('courses', [CourseController::class, 'index'])->name('courses');
+    Route::post('courses', [CourseController::class, 'store'])->name('courses.store');
+    Route::get('courses/{id}', [CourseController::class, 'show'])->name('courses.show');
+    Route::get('courses/{id}/edit', [CourseController::class, 'edit'])->name('courses.edit');
+    Route::delete('courses/{id}', [CourseController::class, 'destroy'])->name('courses.destroy');
+
+    // Teachers
     Route::get('/teachers', [CourseController::class, 'teachers'])->name('teachers');
-     Route::get('/students', [CourseController::class, 'students'])->name('students');
-     Route::get('/library', [LibraryController::class, 'index'])->name('library');
-    Route::get('library/create', [LibraryController::class, 'create'])->name('library.create');
-    Route::post('library', [LibraryController::class, 'store'])->name('library.store');
-    Route::get('library/{id}/edit', [LibraryController::class, 'edit'])->name('library.edit');
-    Route::put('library/{id}', [LibraryController::class, 'update'])->name('library.update');
+
+    // Students
     Route::get('/students', [UserStudentController::class, 'index'])->name('students.index');
     Route::get('/students/create', [UserStudentController::class, 'create'])->name('students.create');
     Route::post('/students', [UserStudentController::class, 'store'])->name('students.store');
     Route::get('/students/{id}/edit', [UserStudentController::class, 'edit'])->name('students.edit');
     Route::put('/students/{id}', [UserStudentController::class, 'update'])->name('students.update');
     Route::delete('/students/{id}', [UserStudentController::class, 'destroy'])->name('students.destroy');
-     Route::get('exam-portal', [ExamPortalController::class, 'index'])->name('exam-portal');
-     Route::post('/students/import', [UserStudentController::class, 'import'])->name('students.import');
-         Route::get('courses', [CourseController::class, 'index'])->name('courses.index');
-    Route::post('courses', [CourseController::class, 'store'])->name('courses.store');
-     Route::get('/courses/{id}', [CourseController::class, 'show'])->name('courses.show');
-     Route::get('/courses/{id}/edit', [CourseController::class, 'edit'])->name('courses.edit');
-     Route::delete('/courses/{id}', [CourseController::class, 'destroy'])->name('courses.destroy');
+    Route::post('/students/import', [UserStudentController::class, 'import'])->name('students.import');
 
+    // Library
+    Route::get('library', [LibraryController::class, 'index'])->name('library');
+    Route::get('library/create', [LibraryController::class, 'create'])->name('library.create');
+    Route::post('library', [LibraryController::class, 'store'])->name('library.store');
+    Route::get('library/{id}/edit', [LibraryController::class, 'edit'])->name('library.edit');
+    Route::put('library/{id}', [LibraryController::class, 'update'])->name('library.update');
+
+    // Exam Portal
+    Route::get('exam-portal', [ExamPortalController::class, 'index'])->name('exam-portal');
 });
 
 // Teacher Routes
@@ -71,4 +90,6 @@ Route::middleware(['auth', 'role:student'])->prefix('student')->name('student.')
     Route::get('/exam-status', [StudentController::class, 'examStatus'])->name('exam-status');
     Route::get('/message-inbox', [StudentController::class, 'messageInbox'])->name('message-inbox');
     Route::get('/cart', [StudentController::class, 'cart'])->name('cart');
+    Route::post('/courses/{course}/enroll', [\App\Http\Controllers\Student\CourseController::class, 'enroll'])->name('courses.enroll');
+     Route::post('/cart/add/{courseId}', [StudentController::class, 'addToCart'])->name('cart.add');
 });

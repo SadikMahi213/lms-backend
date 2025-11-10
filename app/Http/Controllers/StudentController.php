@@ -67,6 +67,23 @@ class StudentController extends Controller
      */
     public function cart()
     {
-        return view('student.add-to-cart');
+        $courses = \App\Models\Course::where('status', 'published')
+        ->with('teacher')
+        ->withCount('students')
+        ->get();
+
+        $user = auth()->user();
+    $enrolledCourseIds = $user->enrolledCourses()->pluck('courses.id')->toArray();
+
+    return view('student.cart', compact('courses'));
     }
+    public function addToCart(Request $request, $courseId)
+{
+    $user = auth()->user();
+
+    // Attach course to user (pivot table)
+    $user->courses()->syncWithoutDetaching([$courseId]);
+
+    return response()->json(['success' => true]);
+}
 }

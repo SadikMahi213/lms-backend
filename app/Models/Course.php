@@ -37,4 +37,11 @@ class Course extends Model
     {
         return $this->belongsToMany(User::class, 'course_user', 'course_id', 'user_id');
     }
+    public function index() {
+    $featuredCourses = Course::where('is_featured', 1)->get(); // যদি তুমি featured column use করো
+    // অথবা সব courses দেখাতে চাও
+    // $featuredCourses = Course::all();
+    
+    return view('home', compact('featuredCourses'));
+}
 }

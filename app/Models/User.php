@@ -12,7 +12,7 @@ class User extends Authenticatable
 
     public function courses()
 {
-    return $this->hasMany(Course::class, 'teacher_id'); 
+    return $this->hasMany(Course::class, 'teacher_id','course_student', 'student_id', 'course_id','user_id'); 
     // ধরে নিচ্ছি courses table-এ teacher_id আছে
 }
 
@@ -61,5 +61,5 @@ public function students()
     {
         return $this->belongsToMany(User::class, 'exam_user');
     }
-
+       
 }

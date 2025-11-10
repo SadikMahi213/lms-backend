@@ -16,4 +16,10 @@ class Student extends Model
         'phone',
         'course',
     ];
+    // app/Models/User.php বা app/Models/Student.php
+public function courses()
+{
+    return $this->belongsToMany(\App\Models\Course::class, 'course_student');
+}
+
 }

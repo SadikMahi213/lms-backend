@@ -116,53 +116,62 @@
     </section>
 
     <!-- Featured Courses -->
-    <section id="courses" class="py-16">
-      <div class="container">
-        <h2 class="text-3xl font-semibold text-center mb-10">Featured Courses</h2>
-        <div class="row g-4">
-          <div class="col-md-4">
-            <div class="card feature-card shadow-sm">
-              <img src="https://via.placeholder.com/400x200" class="card-img-top" alt="Course 1" />
-              <div class="card-body">
-                <h5 class="card-title">Mathematics for Beginners</h5>
-                <p class="card-text text-muted">
-                  Start your journey in mathematics with clear explanations and practical examples.
-                </p>
-                <a href="{{ route('register') }}" class="btn btn-primary btn-sm">Enroll Now</a>
-              </div>
-            </div>
-          </div>
+<!-- Featured Courses -->
+<section id="courses" class="py-16">
+  <div class="container">
+    <h2 class="text-3xl font-semibold text-center mb-10">Featured Courses</h2>
+    <div class="row g-4">
+      @forelse($featuredCourses as $course)
+        <div class="col-md-4">
+          <div class="card feature-card shadow-sm">
+            @if($course->thumbnail)
+              <img src="{{ asset('storage/'.$course->thumbnail) }}" class="card-img-top" alt="{{ $course->title }}" />
+            @else
+              <img src="https://via.placeholder.com/400x200" class="card-img-top" alt="No Thumbnail" />
+            @endif
+            <div class="card-body">
+              <h5 class="card-title">{{ $course->title }}</h5>
+              <p class="card-text text-muted">
+                {{ Str::limit($course->description, 100) }}
+              </p>
+              <form action="{{ route('register', $course->id) }}" method="POST" class="d-inline">
+    @csrf
+     <a href="{{ route('register') }}" class="btn btn-primary btn-sm">Enroll Now</a>
+</form>
+<!-- Details button -->
+<button type="button" class="btn btn-sm btn-info" data-bs-toggle="modal" data-bs-target="#detailsModal{{ $course->id }}">
+    Details
+</button>
 
-          <div class="col-md-4">
-            <div class="card feature-card shadow-sm">
-              <img src="https://via.placeholder.com/400x200" class="card-img-top" alt="Course 2" />
-              <div class="card-body">
-                <h5 class="card-title">Python Programming</h5>
-                <p class="card-text text-muted">
-                  Learn Python from scratch and build real-world projects with our expert
-                  instructors.
-                </p>
-                <a href="{{ route('register') }}" class="btn btn-primary btn-sm">Enroll Now</a>
-              </div>
-            </div>
-          </div>
-
-          <div class="col-md-4">
-            <div class="card feature-card shadow-sm">
-              <img src="https://via.placeholder.com/400x200" class="card-img-top" alt="Course 3" />
-              <div class="card-body">
-                <h5 class="card-title">Data Science Essentials</h5>
-                <p class="card-text text-muted">
-                  Master data analysis, visualization, and machine learning concepts in a structured
-                  path.
-                </p>
-                <a href="{{ route('register') }}" class="btn btn-primary btn-sm">Enroll Now</a>
-              </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      @empty
+        <p class="text-center">No courses available.</p>
+      @endforelse
+    </div>
+  </div>
+</section>
+
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="detailsModal{{ $course->id }}" tabindex="-1" aria-labelledby="detailsModalLabel{{ $course->id }}" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="detailsModalLabel{{ $course->id }}">{{ $course->title }} Details</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                            {{ $course->short_description }}
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
 
     <!-- About Section -->
     <section id="about" class="py-16 bg-slate-100">

@@ -120,9 +120,13 @@
           <a href="{{ route('student.message-inbox') }}" class="sidebar-link"
             ><i class="fa-solid fa-inbox me-2"></i> Message Inbox</a
           >
-          <a href="{{ route('student.cart') }}" class="sidebar-link active"
-            ><i class="fa-solid fa-cart-shopping me-2"></i> Add to Cart</a
-          >
+          @foreach($courses as $course)
+    <div class="course-item">
+        <h4>{{ $course->title }}</h4>
+        <a href="{{ route('student.cart.add', $course->id) }}">Add to cart</a>
+    </div>
+@endforeach
+
         </nav>
       </aside>
 
@@ -135,7 +139,14 @@
               <button id="sidebarToggle" class="btn btn-outline-secondary d-lg-none">
                 <i class="fa-solid fa-bars"></i>
               </button>
-              <h4 class="mb-0">Add to Cart</h4>
+              @auth('web')
+    <button type="button" class="btn btn-primary btn-sm add-to-cart-btn" data-course-id="{{ $course->id }}">
+        Add to Cart
+    </button>
+@else
+    <a href="{{ route('register') }}" class="btn btn-primary btn-sm">Add to Cart</a>
+@endauth
+
               <small class="text-muted ms-2">Enroll in Courses</small>
             </div>
 
@@ -174,20 +185,62 @@
           <h5 class="mb-4">Available Courses</h5>
 
           <div class="row g-4">
-            <div class="col-12">
-              <div class="card shadow-sm">
-                <div class="card-body text-center py-5">
-                  <i class="fa-solid fa-shopping-cart fa-3x text-muted mb-3"></i>
-                  <h6 class="text-muted">No courses available at the moment</h6>
-                  <p class="text-muted small">Check back later for new courses!</p>
+    @forelse($courses as $course)
+        <div class="col-md-4">
+            <div class="card course-card shadow-sm">
+                @if($course->thumbnail)
+                    <img src="{{ asset('storage/'.$course->thumbnail) }}" class="card-img-top" alt="{{ $course->name }}">
+                @else
+                    <img src="https://via.placeholder.com/400x200" class="card-img-top" alt="No Thumbnail">
+                @endif
+                <div class="card-body">
+                    <h5 class="card-title">{{ $course->name }}</h5>
+                    <p class="card-text text-muted">{{ Str::limit($course->short_description, 100) }}</p>
+                    <p class="text-sm text-muted">Teacher: {{ $course->teacher->name ?? 'N/A' }}</p>
+                    <p class="text-sm text-muted">Enrolled Students: {{ $course->students_count }}</p>
+
+                    {{-- Enroll Button --}}
+                    @auth('web')
+                        <form action="{{ route('student.courses.enroll', $course->id) }}" method="POST" class="d-inline">
+                            @csrf
+                            <button type="submit" class="btn btn-primary btn-sm">Enroll Now</button>
+                        </form>
+                    @else
+                        <a href="{{ route('register') }}" class="btn btn-primary btn-sm">Enroll Now</a>
+                    @endauth
                 </div>
-              </div>
             </div>
-            <!-- End course card -->
-          </div>
-        </main>
+        </div>
+    @empty
+        <div class="col-12">
+            <div class="card shadow-sm text-center py-5">
+                <i class="fa-solid fa-shopping-cart fa-3x text-muted mb-3"></i>
+                <h6 class="text-muted">No courses available at the moment</h6>
+                <p class="text-muted small">Check back later for new courses!</p>
+            </div>
+        </div>
+    @endforelse
+</div>
+<!-- Cart Modal -->
+<div class="modal fade" id="cartModal" tabindex="-1" aria-labelledby="cartModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="cartModalLabel">Course Added</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        Course has been added to your cart successfully!
+      </div>
+      <div class="modal-footer">
+        <a href="{{ route('student.cart') }}" class="btn btn-primary">Go to Cart</a>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Continue</button>
       </div>
     </div>
+  </div>
+</div>
+
+
 
     <!-- Bootstrap + Font Awesome -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
@@ -199,5 +252,34 @@
         document.getElementById('sidebar').classList.toggle('show');
       });
     </script>
+    <script>
+document.querySelectorAll('.add-to-cart-btn').forEach(button => {
+    button.addEventListener('click', function() {
+        let courseId = this.dataset.courseId;
+
+        fetch(`/student/cart/add/${courseId}`, {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({})
+        })
+        .then(response => response.json())
+        .then(data => {
+            if(data.success) {
+                // Show modal
+                var cartModal = new bootstrap.Modal(document.getElementById('cartModal'));
+                cartModal.show();
+            } else {
+                alert('Error adding course to cart');
+            }
+        })
+        .catch(err => console.error(err));
+    });
+});
+</script>
+
   </body>
 </html>

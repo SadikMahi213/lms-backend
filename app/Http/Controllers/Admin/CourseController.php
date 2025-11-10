@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Course;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 
 class CourseController extends Controller
@@ -52,7 +53,7 @@ class CourseController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'short_description' => 'nullable|string|max:255',
+            'short_description' => 'nullable|string|max:10000',
             'category' => 'nullable|string|max:255',
             'thumbnail' => 'nullable|image|max:2048',
             'materials.*' => 'nullable|file|max:10240',
@@ -80,7 +81,7 @@ class CourseController extends Controller
             }
         }
 
-        return redirect()->route('admin.courses.index')->with('success', 'Course published successfully!');
+        return redirect()->route('admin.courses')->with('success', 'Course published successfully!');
     }
      public function show($id)
     {
@@ -91,7 +92,7 @@ class CourseController extends Controller
     {
         $course = Course::findOrFail($id);
         $teachers = User::where('role', 'teacher')->get();
-        return view('admin.courses_edit', compact('course', 'teachers'));
+        return view('admin.courses.edit', compact('course', 'teachers'));
     }
     public function update(Request $request, $id)
     {
@@ -115,14 +116,30 @@ class CourseController extends Controller
             $course->save();
         }
 
-        return redirect()->route('admin.courses.index')->with('success', 'Course updated successfully!');
+        return redirect()->route('admin.courses')->with('success', 'Course updated successfully!');
     }
      public function destroy($id)
     {
         $course = Course::findOrFail($id);
         $course->delete();
-        return redirect()->route('admin.courses.index')->with('success', 'Course deleted successfully!');
+        return redirect()->route('admin.courses')->with('success', 'Course deleted successfully!');
     }
+    public function enroll($id)
+    {
+        $user = Auth::user(); // logged-in student
+        $course = Course::findOrFail($id); // course table এর id column
+
+        // Check if already enrolled
+        if ($user->enrolledCourses()->where('course_id', $course->id)->exists()) {
+            return redirect()->back()->with('error', 'You are already enrolled in this course.');
+        }
+
+        // Attach to pivot table course_user
+        $user->enrolledCourses()->attach($course->id);
+
+        return redirect()->back()->with('success', 'Successfully enrolled in the course!');
+    }
+
     
 }
  
